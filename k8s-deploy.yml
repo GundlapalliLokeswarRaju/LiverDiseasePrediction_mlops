@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liver-api
+  labels:
+    app: liver-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: liver-api
+  template:
+    metadata:
+      labels:
+        app: liver-api
+    spec:
+      containers:
+      - name: liver-api
+        image: lokesh8374/liver 
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: liver-api-service
+spec:
+  selector:
+    app: liver-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
