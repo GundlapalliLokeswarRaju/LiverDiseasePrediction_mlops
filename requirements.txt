@@ -4,4 +4,4 @@ numpy
 scikit-learn
 pandas
 joblib
-
+prometheus_fastapi_instrumentator

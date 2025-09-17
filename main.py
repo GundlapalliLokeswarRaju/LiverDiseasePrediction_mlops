@@ -3,11 +3,18 @@ from pydantic import BaseModel
 import numpy as np
 import joblib
 
+from prometheus_fastapi_instrumentator import Instrumentator
+
 # Load model and scaler
 model = joblib.load("liver_model.pkl")
 _, _, _, _, scaler = joblib.load("data.pkl")  # Unpack tuple, use only scaler
 
 app = FastAPI()
+
+#  instrumentor for metrics
+
+instrumentator = Instrumentator()
+instrumentator.instrument(app).expose(app)
 
 class PatientData(BaseModel):
     Age: float
