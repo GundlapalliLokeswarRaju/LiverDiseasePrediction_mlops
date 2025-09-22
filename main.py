@@ -63,13 +63,12 @@ MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
 mlflow = mlflow  # ensure imported
 os.environ["MLFLOW_TRACKING_URI"] = MLFLOW_TRACKING_URI
 
-# Model URI in model registry
-MODEL_URI = os.getenv("MODEL_URI", "models:/MyLiverModel/Production")
+
 
 from prometheus_fastapi_instrumentator import Instrumentator
 
 # Load model and scaler
-model = joblib.load("liver_model.pkl")
+model = joblib.load("tests/liver_model.pkl")
 _, _, _, _, scaler = joblib.load("data.pkl")  # Unpack tuple, use only scaler
 
 app = FastAPI()
@@ -78,6 +77,7 @@ app = FastAPI()
 
 instrumentator = Instrumentator()
 instrumentator.instrument(app).expose(app)
+MODEL_URI = "models:/LiverModel/3"
 
 # Try to load model via MLflow registry
 model = None

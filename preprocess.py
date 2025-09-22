@@ -34,6 +34,6 @@ X_test = scalar.transform(X_test)
 
 # Save the processed data
 
-joblib.dump((X_train, X_test, y_train, y_test, scalar), 'main/models/data.pkl')
+joblib.dump((X_train, X_test, y_train, y_test, scalar), 'data.pkl')
 
 print("preprocessing complete. Data saved")

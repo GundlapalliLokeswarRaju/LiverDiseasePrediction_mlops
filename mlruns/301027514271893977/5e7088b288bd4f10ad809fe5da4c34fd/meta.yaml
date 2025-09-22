@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/301027514271893977/5e7088b288bd4f10ad809fe5da4c34fd/artifacts
+end_time: 1758534011801
+entry_point_name: ''
+experiment_id: '301027514271893977'
+lifecycle_stage: active
+run_id: 5e7088b288bd4f10ad809fe5da4c34fd
+run_name: brawny-gnu-475
+run_uuid: 5e7088b288bd4f10ad809fe5da4c34fd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758534002929
+status: 3
+tags: []
+user_id: lokes

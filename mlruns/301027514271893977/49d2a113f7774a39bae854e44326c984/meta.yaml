@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/301027514271893977/49d2a113f7774a39bae854e44326c984/artifacts
+end_time: 1758532371735
+entry_point_name: ''
+experiment_id: '301027514271893977'
+lifecycle_stage: active
+run_id: 49d2a113f7774a39bae854e44326c984
+run_name: redolent-jay-963
+run_uuid: 49d2a113f7774a39bae854e44326c984
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758532349220
+status: 3
+tags: []
+user_id: lokes
