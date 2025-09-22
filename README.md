@@ -14,22 +14,6 @@ The project consists of the following main components:
 * **`k8s-deploy.yml`:** A Kubernetes deployment file to deploy the API on a Kubernetes cluster.
 * **`prometheus-config.yaml`:** A Prometheus configuration file to enable scraping of the `/metrics` endpoint.
   
-## Project Structure
-
-```
-gundlapallilokeswarraju.disease_pred.github.io/
-├── app/
-│   ├── main.py
-│   ├── Dockerfile
-│   └── requirements.txt
-├── models/
-│   ├── liver_model.pkl
-│   └── data.pkl
-├── k8s-deploy.yml
-├── prometheus-config.yaml
-├── train.py
-└── README.md
-```
 
 ## Setup and Deployment
 
@@ -47,7 +31,7 @@ gundlapallilokeswarraju.disease_pred.github.io/
 
     ```bash
     git clone <repository_url>
-    cd gundlapallilokeswarraju.disease_pred.github.io
+    cd LiverDiseasePrediction_mlops
     ```
 
 2. **Create a virtual environment (optional but recommended):**
