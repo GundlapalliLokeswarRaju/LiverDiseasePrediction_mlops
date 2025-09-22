@@ -80,21 +80,27 @@ instrumentator.instrument(app).expose(app)
 MODEL_URI = "models:/LiverModel/3"
 
 # Try to load model via MLflow registry
+import os
+import joblib
+
+BASE_DIR = os.path.dirname(__file__)
+
 model = None
-load_error = None
-try:
-    model = mlflow.pyfunc.load_model(MODEL_URI)
-    print(f"[INFO] Loaded model from MLflow URI: {MODEL_URI}")
-except Exception as e:
-    load_error = str(e)
-    print("[WARN] Could not load model from MLflow registry:", load_error)
-    # fallback: try to load local model
+scaler = None
+
+# Load the model only if the environment variable is NOT set
+if not os.getenv("SKIP_MODEL_LOAD"):
     try:
-        model = joblib.load("liver_model.pkl")
-        print("[INFO] Loaded fallback local model at liver_model.pkl")
-    except Exception as e2:
-        print("[ERROR] Cannot load fallback model:", str(e2))
-        model = None
+        model_path = os.path.join(BASE_DIR, "liver_model.pkl")
+        scaler_path = os.path.join(BASE_DIR, "data.pkl")
+        model = joblib.load(model_path)
+        _, _, _, _, scaler = joblib.load(scaler_path)
+        print("[INFO] Model loaded for production.")
+    except FileNotFoundError:
+        print("[WARN] Model files not found; API will run without a model.")
+else:
+    print("[INFO] SKIP_MODEL_LOAD is set; skipping model load.")
+
 
 class PatientData(BaseModel):
     Age: float
@@ -127,3 +133,4 @@ def predict(data: PatientData):
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
