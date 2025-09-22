@@ -52,11 +52,31 @@ jobs:
           docker build -t lokesh8374/liver:latest ./app
           docker push lokesh8374/liver:latest
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'latest'
+      # Install Minikube prerequisites and start Minikube with the Docker driver.
+      - name: Install Minikube
+        run: |
+          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+          sudo dpkg -i minikube_latest_amd64.deb
+
+      - name: Start Minikube Cluster
+        run: |
+          minikube start --driver=docker --profile liver-mlops
+          minikube status --profile liver-mlops
+          kubectl config use-context minikube
 
       - name: Deploy update to Kubernetes
         run: |
           kubectl set image deployment/liver-api liver-api=lokesh8374/liver:latest --namespace=default
+
+      # Port-forwarding the services
+      - name: Port-forward liver-api-service
+        run: |
+          kubectl port-forward svc/liver-api-service 8000:80 &
+        
+      - name: Port-forward Grafana
+        run: |
+          kubectl port-forward svc/grafana 3000:80 &
+
+      - name: Port-forward Prometheus
+        run: |
+          kubectl port-forward svc/prometheus-server 9090:80 &
