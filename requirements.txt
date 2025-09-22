@@ -5,3 +5,6 @@ scikit-learn
 pandas
 joblib
 prometheus_fastapi_instrumentator
+pytest
+httpx
+pytest-asyncio
