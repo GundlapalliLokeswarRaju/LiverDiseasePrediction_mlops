@@ -24,7 +24,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
-      
+      - name: Run unit tests
+        run: |
+          pytest tests
+          
       - name: Train model and log with MLflow
         run: |
           python train.py
