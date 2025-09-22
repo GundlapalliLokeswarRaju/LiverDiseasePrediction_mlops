@@ -8,3 +8,4 @@ prometheus_fastapi_instrumentator
 pytest
 httpx
 pytest-asyncio
+mlflow
