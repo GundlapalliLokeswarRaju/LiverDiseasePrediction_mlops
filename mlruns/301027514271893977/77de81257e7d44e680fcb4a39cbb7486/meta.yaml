@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/301027514271893977/77de81257e7d44e680fcb4a39cbb7486/artifacts
+end_time: 1758522259081
+entry_point_name: ''
+experiment_id: '301027514271893977'
+lifecycle_stage: active
+run_id: 77de81257e7d44e680fcb4a39cbb7486
+run_name: honorable-grouse-565
+run_uuid: 77de81257e7d44e680fcb4a39cbb7486
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758522243929
+status: 3
+tags: []
+user_id: lokes

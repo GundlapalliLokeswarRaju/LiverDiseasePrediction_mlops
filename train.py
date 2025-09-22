@@ -1,41 +1,61 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-import numpy as np
+# import joblib
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.metrics import accuracy_score
+
+# # Load preprocessed data
+# X_train, X_test, y_train, y_test, scaler = joblib.load('data.pkl')
+
+# # Train the model
+# model = RandomForestClassifier(n_estimators=100, random_state=42)
+# model.fit(X_train, y_train)
+
+# # Evaluate the model
+# y_pred = model.predict(X_test)
+# accuracy = accuracy_score(y_test, y_pred)
+
+# print(f"Model Accuracy: {accuracy:.4f}")
+
+# # Save the trained model
+# joblib.dump(model, 'liver_model.pkl')
+
+# print("Model training complete. Model saved.")
+
+
 import joblib
+import mlflow
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
-# Load model and scaler
-model = joblib.load("main/models/liver_model.pkl")
-_, _, _, _, scaler = joblib.load("main/models/data.pkl")  # Unpack tuple, use only scaler
+# Load preprocessed data
+X_train, X_test, y_train, y_test, scaler = joblib.load('data.pkl')
 
-app = FastAPI()
+# Train the model
+n_estimators = 100
+model = RandomForestClassifier(n_estimators=n_estimators, random_state=42)
+model.fit(X_train, y_train)
 
-class PatientData(BaseModel):
-    Age: float
-    Total_Bilirubin: float
-    Direct_Bilirubin: float
-    Alkaline_Phosphatase: float
-    Alanine_Aminotransferase: float
-    Aspartate_Aminotransferase: float
-    Total_Proteins: float
-    Albumin: float
-    Albumin_Globulin_Ratio: float
-    Gender: int
+# Evaluate the model
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
 
-@app.get("/")
-def read_root():
-    return {"message": "Liver Disease prediction API is up!"}
+print(f"Model Accuracy: {accuracy:.4f}")
 
-@app.post("/predict")
-def predict(data: PatientData):
-    features = np.array([[data.Age, data.Total_Bilirubin, data.Direct_Bilirubin,
-                          data.Alkaline_Phosphatase, data.Alanine_Aminotransferase,
-                          data.Aspartate_Aminotransferase, data.Total_Proteins,
-                          data.Albumin, data.Albumin_Globulin_Ratio, data.Gender]])
-    
-    # Scale the features using the loaded scaler
-    features = scaler.transform(features)
-    
-    # Make prediction using the model
-    prediction = model.predict(features)
-    
-    return {"prediction": int(prediction[0])}
+# ---------------- MLflow Integration ----------------
+# Point MLflow to your local tracking server
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_experiment("LiverDiseasePrediction")
+
+with mlflow.start_run():
+    # Log parameters and metrics
+    mlflow.log_param("n_estimators", n_estimators)
+    mlflow.log_metric("accuracy", accuracy)
+
+    # Log the model in MLflow and register it
+    mlflow.sklearn.log_model(
+        sk_model=model,
+        artifact_path="model",
+        registered_model_name="LiverModel"
+    )
+
+print("✅ Model training complete and logged to MLflow.")
