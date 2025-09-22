@@ -27,6 +27,12 @@ jobs:
       - name: Run unit tests
         run: |
           pytest tests
+      - name: Run the MLflow server
+        run: |
+          mlflow server ^
+          --backend-store-uri sqlite:///C:/Users/lokes/OneDrive/Desktop/liver/mlflow.db ^
+          --default-artifact-root file:///C:/Users/lokes/OneDrive/Desktop/liver/mlflow_artifacts ^
+          --host 0.0.0.0 --port 5000
           
       - name: Train model and log with MLflow
         run: |
