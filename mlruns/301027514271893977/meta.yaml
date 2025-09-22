@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/301027514271893977
+creation_time: 1758522243246
+experiment_id: '301027514271893977'
+last_update_time: 1758522243246
+lifecycle_stage: active
+name: LiverDiseasePrediction

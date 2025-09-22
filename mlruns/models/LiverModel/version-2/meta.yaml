@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1758522603724
+current_stage: None
+description: ''
+last_updated_timestamp: 1758522603724
+name: LiverModel
+run_id: 77de81257e7d44e680fcb4a39cbb7486
+run_link: ''
+source: models:/LiverModel/1
+status: READY
+status_message: null
+storage_location: mlflow-artifacts:/301027514271893977/77de81257e7d44e680fcb4a39cbb7486/artifacts/model
+user_id: null
+version: 2

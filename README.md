@@ -241,3 +241,13 @@ This project includes monitoring support to scrape API metrics and visualize the
     ```
 
 Happy coding!
+
+# integrating MLflow
+
+1. mkdir -p ~/mlfow_artifacts
+2. mlflow server ^
+  --backend-store-uri sqlite:///C:/Users/lokes/OneDrive/Desktop/liver/mlflow.db ^
+  --default-artifact-root file:///C:/Users/lokes/OneDrive/Desktop/liver/mlflow_artifacts ^
+  --host 0.0.0.0 --port 5000
+3. set MLFLOW_TRACKING_URI=http://localhost:5000
+4. 
